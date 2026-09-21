@@ -425,11 +425,11 @@
     }
 
     function runCalculation() {
-      const r1 = cleanNum(document.getElementById('round1-amount').value);
-      const r2 = cleanNum(document.getElementById('round2-amount').value);
-      const totalMembers = parseInt(document.getElementById('member-count').value, 10);
-      const nonDrinkers = parseInt(document.getElementById('non-drinker-count').value, 10);
-      const lateMembers = parseInt(document.getElementById('late-count').value, 10);
+      const r1 = cleanNum(document.getElementById('round1-amount')?.value);
+      const r2 = cleanNum(document.getElementById('round2-amount')?.value);
+      const totalMembers = parseInt(document.getElementById('member-count')?.value, 10);
+      const nonDrinkers = parseInt(document.getElementById('non-drinker-count')?.value, 10);
+      const lateMembers = parseInt(document.getElementById('late-count')?.value, 10);
 
       // Round 2 is equal 1/N
       const r2PerPerson = Math.round(r2 / totalMembers);
@@ -455,8 +455,8 @@
 
     document.getElementById('calc-btn').addEventListener('click', runCalculation);
     document.getElementById('reset-btn').addEventListener('click', () => {
-      document.getElementById('round1-amount').value = '180,000';
-      document.getElementById('round2-amount').value = '45,000';
+      { const _el = document.getElementById('round1-amount'); if (_el) _el.value = '180,000'; }
+      { const _el = document.getElementById('round2-amount'); if (_el) _el.value = '45,000'; }
       runCalculation();
     });
 
