@@ -57,6 +57,28 @@
     "dateModified": "2026-02-22"
   }
   </script>
+
+  <!-- Section 13: Mobile Typography & Button Shield Standard -->
+  <style id="mobile-hardening-shield">
+    /* 모바일 한글 단어 단위 줄바꿈 보장 & 버튼 텍스트 줄바꿈 방지 */
+    body, h1, h2, h3, h4, p, span, label {
+      word-break: keep-all;        /* 한글 단어가 중간에 잘리지 않게 단어 단위 줄바꿈 */
+      overflow-wrap: break-word;   /* 긴 영문 URL 화면 이탈 방지 */
+    }
+    button, [role="button"], a.btn {
+      white-space: nowrap;         /* 좁은 폭에서 버튼 글자가 2줄로 찌그러지는 것 방지 */
+      word-break: keep-all;
+    }
+    @media (max-width: 640px) {
+      input, select, textarea {
+        font-size: 16px !important; /* iOS 포커스 시 화면 강제 확대 방지 */
+      }
+      button, [role="button"], a.btn {
+        min-height: 42px;          /* WCAG 모바일 터치 타깃 확보 */
+      }
+    }
+  </style>
+
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased">
   
@@ -119,7 +141,8 @@
         <section id="sec-2" class="scroll-mt-24 space-y-4 mb-8">
           <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">2. 차수별 가중치 및 핸디캡 분할 행렬 수학 공식</h2>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">본 스마트 더치페이 엔진은 연립방정식 행렬 알고리즘을 기반으로 완벽한 수학적 무결성을 보장합니다.</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">각 차수(Round $k$)별 총비용 $C_k$에 대해, 각 참석자 $i$의 참여 여부 $P_{i,k} \in \{0, 1\}$와 음주 여부 가중치 $W_{i,k}$를 적용하여 개인별 실질 부담금 $S_i$를 도출합니다:
-$$S_i = \sum_{k=1}^{n} \left( C_k 	imes rac{W_{i,k} 	imes P_{i,k}}{\sum_{j} (W_{j,k} 	imes P_{j,k})} ight)$$</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">술을 마시지 않은 비음주자에게는 주류 비용에 해당하는 기본 20~30% 할인 핸디캡 가중치가 자동으로 적용되며, 늦게 온 지각자는 참여한 차수의 비용만 정밀하게 배분됩니다.</p>
+$$S_i = \sum_{k=1}^{n} \left( C_k 	imes rac{W_{i,k} 	imes P_{i,k}}{\sum_{j} (W_{j,k} 	imes P_{j,k})} 
+ight)$$</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">술을 마시지 않은 비음주자에게는 주류 비용에 해당하는 기본 20~30% 할인 핸디캡 가중치가 자동으로 적용되며, 늦게 온 지각자는 참여한 차수의 비용만 정밀하게 배분됩니다.</p>
         </section>
         
             <div class="manual-ad-box my-8 text-center">
