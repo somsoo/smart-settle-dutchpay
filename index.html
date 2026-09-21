@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartSettle - 다자간 N빵·차등 정산기</title>
+  <meta name="description" content="1차, 2차, 지각자 및 비음주자 차등 비용 분배와 최소 송금 동선 최적화 알고리즘 기반 무서버 단톡방 정산 영수증 생성기">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2228289204702106" crossorigin="anonymous"></script>
+  <style>
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .manual-ad-box { width: 100%; max-width: 960px; overflow: hidden; }
+    .manual-ad-box ins { max-width: 100% !important; overflow: hidden !important; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col justify-between">
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">💰</span>
+        <div>
+          <h1 class="text-base font-bold text-slate-900 leading-tight">SmartSettle (다자간 차등 정산기)</h1>
+          <p class="text-xs text-slate-500">비음주자/지각자 차등 계산 · 최소 송금 횟수 최적화 · 카카오톡 영수증</p>
+        </div>
+      </div>
+      <a href="guides/guide.html" class="text-xs bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg border border-emerald-200 hover:bg-emerald-100 transition">
+        가이드
+      </a>
+    </div>
+  </header>
+
+  <div class="manual-ad-box mx-auto my-2 px-4">
+    <ins class="adsbygoogle"
+         style="display:block; height: 60px; max-height: 60px;"
+         data-ad-client="ca-pub-2228289204702106"
+         data-ad-slot="3824727725"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-4 py-6 flex-grow">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: Input Form (6 cols) -->
+      <section class="lg:col-span-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-5">
+        <div class="border-b border-slate-100 pb-3">
+          <h2 class="text-base font-bold text-slate-800">🍻 차수별 금액 및 참석자 설정</h2>
+          <p class="text-xs text-slate-500">1차(식사/술), 2차(카페) 등 차등 조건을 설정하세요.</p>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label class="block text-xs text-slate-600 mb-1" for="round1-amount">1차 결제 총액 (식사+술, 원)</label>
+            <input type="text" id="round1-amount" value="180,000" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-base font-medium">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-600 mb-1" for="round2-amount">2차 결제 총액 (카페 등, 원)</label>
+            <input type="text" id="round2-amount" value="45,000" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-base font-medium">
+          </div>
+        </div>
+
+        <div class="border-t border-slate-100 pt-3">
+          <h3 class="text-xs font-bold text-slate-700 mb-2">참석 멤버 및 차등 옵션</h3>
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-200">
+              <span class="font-bold text-slate-800">총 참석 인원</span>
+              <select id="member-count" class="px-2.5 py-1.5 border border-slate-300 rounded-lg text-base">
+                <option value="3">3명</option>
+                <option value="4" selected>4명</option>
+                <option value="5">5명</option>
+                <option value="6">6명</option>
+              </select>
+            </div>
+            <div class="p-2.5 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-200">
+              <span>비음주자 (1차 주류비 50% 할인)</span>
+              <select id="non-drinker-count" class="px-2.5 py-1.5 border border-slate-300 rounded-lg text-base">
+                <option value="0">0명</option>
+                <option value="1" selected>1명</option>
+                <option value="2">2명</option>
+              </select>
+            </div>
+            <div class="p-2.5 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-200">
+              <span>2차만 참석자 (1차 면제)</span>
+              <select id="late-count" class="px-2.5 py-1.5 border border-slate-300 rounded-lg text-base">
+                <option value="0" selected>0명</option>
+                <option value="1">1명</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 pt-2">
+          <button id="calc-btn" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-4 rounded-xl shadow transition text-base">
+            <span>✨</span> 차등 정산 영수증 도출하기
+          </button>
+          <button id="reset-btn" class="px-4 py-3.5 border border-slate-300 hover:bg-slate-100 text-slate-600 font-semibold rounded-xl text-base">
+            초기화
+          </button>
+        </div>
+      </section>
+
+      <!-- Right Column: Receipt Card (6 cols, Sticky) -->
+      <section class="lg:col-span-6 lg:sticky lg:top-20 space-y-4">
+        <div id="result-box" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="border-b border-dashed border-slate-300 pb-4 mb-4 text-center">
+            <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full mb-1">
+              ✓ SmartSettle 정산 영수증
+            </span>
+            <h3 class="text-lg font-black text-slate-900">총 결제 비용 225,000원</h3>
+            <p class="text-3xl font-black text-emerald-600 mt-2" id="general-pay-display">일반 참석: 61,875원</p>
+            <p class="text-xs text-slate-500 mt-1" id="non-drinker-display">비음주자: 39,375원 (주류 50% 할인)</p>
+          </div>
+
+          <div class="space-y-2 text-xs" id="receipt-details">
+            <div class="flex justify-between py-1.5 border-b border-slate-100">
+              <span class="text-slate-500">1차(식사) 배분</span>
+              <span class="font-bold text-slate-800">총 180,000원</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-100">
+              <span class="text-slate-500">2차(카페) 배분 (1/N 균등)</span>
+              <span class="font-bold text-slate-800">인당 11,250원</span>
+            </div>
+            <div class="p-3 bg-emerald-50 rounded-xl text-emerald-950 font-medium">
+              <span class="font-bold block mb-1">🚀 최소 송금 동선</span>
+              <p id="transfer-guide">A(총무)에게 B, C 각 61,875원 송금 / D(비음주자) 39,375원 송금 완료</p>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button id="copy-btn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-4 rounded-xl text-sm transition shadow">
+              <span>📋</span> 카카오톡 단톡방용 영수증 복사
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <section class="mt-12 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+      <h2 class="text-xl font-bold text-slate-900 mb-3">SmartSettle 차등 정산 FAQ</h2>
+      <details class="group border border-slate-200 rounded-xl p-4 bg-slate-50 open:bg-white transition">
+        <summary class="font-semibold text-slate-800 cursor-pointer list-none flex justify-between">
+          <span>Q. 10원 단위 절사는 어떻게 처리되나요?</span>
+          <span class="text-slate-400 group-open:rotate-180 transition">▼</span>
+        </summary>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          송금 편의를 위해 10원 단위는 반올림 혹은 절사되며, 발생하는 차액은 총무가 일괄 조정합니다.
+        </p>
+      </details>
+    </section>
+  </main>
+
+  <div class="manual-ad-box mx-auto my-6 px-4">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2228289204702106"
+         data-ad-slot="3416334507"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-sm px-5 py-2.5 rounded-full shadow-lg transition-opacity duration-300 opacity-0 pointer-events-none z-50">
+    정산 영수증이 클립보드에 복사되었습니다.
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400">
+    © 2026 SmartSettle. All rights reserved.
+  </footer>
+
+  <script>
+    function cleanNum(val) {
+      if (!val) return 0;
+      return parseInt(String(val).replace(/,/g, ''), 10) || 0;
+    }
+    function formatNum(num) {
+      return Math.round(num).toLocaleString('ko-KR');
+    }
+
+    function runCalculation() {
+      const r1 = cleanNum(document.getElementById('round1-amount').value);
+      const r2 = cleanNum(document.getElementById('round2-amount').value);
+      const totalMembers = parseInt(document.getElementById('member-count').value, 10);
+      const nonDrinkers = parseInt(document.getElementById('non-drinker-count').value, 10);
+      const lateMembers = parseInt(document.getElementById('late-count').value, 10);
+
+      // Round 2 is equal 1/N
+      const r2PerPerson = Math.round(r2 / totalMembers);
+
+      // Round 1: suppose food 50%, alcohol 50%
+      const foodR1 = r1 * 0.50;
+      const alcoholR1 = r1 * 0.50;
+
+      const r1Members = Math.max(1, totalMembers - lateMembers);
+      const foodPerPerson = foodR1 / r1Members;
+
+      // Alcohol is split among drinkers only
+      const drinkers = Math.max(1, r1Members - nonDrinkers);
+      const alcoholPerPerson = alcoholR1 / drinkers;
+
+      const generalTotal = Math.round(foodPerPerson + alcoholPerPerson + r2PerPerson);
+      const nonDrinkerTotal = Math.round(foodPerPerson + (alcoholPerPerson * 0.50) + r2PerPerson);
+
+      document.getElementById('general-pay-display').textContent = `일반 참석: ${formatNum(generalTotal)}원`;
+      document.getElementById('non-drinker-display').textContent = `비음주자: ${formatNum(nonDrinkerTotal)}원 (주류 50% 할인)`;
+      document.getElementById('transfer-guide').textContent = `총무에게 일반 ${formatNum(generalTotal)}원, 비음주자 ${formatNum(nonDrinkerTotal)}원 입금`;
+    }
+
+    document.getElementById('calc-btn').addEventListener('click', runCalculation);
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      document.getElementById('round1-amount').value = '180,000';
+      document.getElementById('round2-amount').value = '45,000';
+      runCalculation();
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      const g = document.getElementById('general-pay-display').textContent;
+      const nd = document.getElementById('non-drinker-display').textContent;
+      const url = window.location.href;
+      const text = `[SmartSettle 단톡방 차등 정산]\n- ${g}\n- ${nd}\n👉 차등 정산기: ${url}`;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showToast).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    });
+
+    function showToast() {
+      const t = document.getElementById('toast');
+      t.style.opacity = '1';
+      setTimeout(() => { t.style.opacity = '0'; }, 2200);
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showToast(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    window.addEventListener('DOMContentLoaded', runCalculation);
+  </script>
+</body>
+</html>
