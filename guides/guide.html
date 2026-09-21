@@ -1,1 +1,292 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>SmartSettle 가이드</title><style>html, body { max-width: 100%; overflow-x: hidden; }</style></head><body style="padding:20px;font-family:sans-serif;"><h1>SmartSettle 가이드</h1><p>차등 정산 알고리즘을 설명합니다. <a href="../index.html">돌아가기</a></p></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N차 복잡한 모임 정산과 지각·음주 핸디캡 더치페이 공학 가이드</title>
+  <meta name="description" content="1차 고깃집, 2차 호프, 3차 노래방 등 N차 모임에서 참석자별 차수 참여, 술 안 마신 사람, 늦게 온 지각자 핸디캡을 1원 단위 오차 없이 공평 정산하는 알고리즘을 분석합니다.">
+  <link rel="canonical" href="https://smart-settle-dutchpay.enjoy-onepage.com/guides/guide.html">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="N차 복잡한 모임 정산과 지각·음주 핸디캡 더치페이 공학 가이드">
+  <meta property="og:description" content="1차 고깃집, 2차 호프, 3차 노래방 등 N차 모임에서 참석자별 차수 참여, 술 안 마신 사람, 늦게 온 지각자 핸디캡을 1원 단위 오차 없이 공평 정산하는 알고리즘을 분석합니다.">
+  <meta property="og:url" content="https://smart-settle-dutchpay.enjoy-onepage.com/guides/guide.html">
+  <meta property="og:image" content="https://smart-settle-dutchpay.enjoy-onepage.com/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="N차 복잡한 모임 정산과 지각·음주 핸디캡 더치페이 공학 가이드">
+  <meta name="twitter:description" content="1차 고깃집, 2차 호프, 3차 노래방 등 N차 모임에서 참석자별 차수 참여, 술 안 마신 사람, 늦게 온 지각자 핸디캡을 1원 단위 오차 없이 공평 정산하는 알고리즘을 분석합니다.">
+  <meta name="twitter:image" content="https://smart-settle-dutchpay.enjoy-onepage.com/og-image.png">
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" href="../favicon.ico">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2228289204702106" crossorigin="anonymous"></script>
+  
+  <style>
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .manual-ad-box { width: 100%; max-width: 960px; overflow: hidden; margin: 16px auto; }
+    .manual-ad-box ins { max-width: 100% !important; overflow: hidden !important; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "N차 복잡한 모임 정산과 지각·음주 핸디캡 더치페이 공학 가이드",
+    "description": "1차 고깃집, 2차 호프, 3차 노래방 등 N차 모임에서 참석자별 차수 참여, 술 안 마신 사람, 늦게 온 지각자 핸디캡을 1원 단위 오차 없이 공평 정산하는 알고리즘을 분석합니다.",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://smart-settle-dutchpay.enjoy-onepage.com/guides/guide.html"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "enjoy-onepage.com Research Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "enjoy-onepage.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://smart-settle-dutchpay.enjoy-onepage.com/favicon.ico"
+      }
+    },
+    "datePublished": "2026-01-01",
+    "dateModified": "2026-02-22"
+  }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+  
+  <!-- Header -->
+  <header class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="../index.html" class="text-indigo-600 dark:text-indigo-400 font-extrabold text-sm flex items-center gap-1.5 hover:underline">
+        <span>←</span> <span>스마트 더치페이 계산기 메인 도구로 가기</span>
+      </a>
+      <span class="text-xs bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full font-semibold border border-indigo-200 dark:border-indigo-800">
+        전문 매거진 가이드북
+      </span>
+    </div>
+  </header>
+
+  <!-- Main 2-Column Magazine Grid -->
+  <main class="max-w-6xl mx-auto px-4 py-8 flex-grow">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: Article Body (8 cols) -->
+      <article class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm border border-slate-200 dark:border-slate-800">
+        
+        <!-- Header Info -->
+        <div class="border-b border-slate-100 dark:border-slate-800 pb-6 mb-6">
+          <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">In-Depth Editorial Guide</span>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight mt-2 mb-4">
+            복잡한 모임 정산과 핸디캡 공평 분할 가이드
+          </h1>
+          <div class="flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <span>발행일: 2026.02.15</span>
+            <span>•</span>
+            <span>분석: enjoy-onepage 정책·데이터 리서치팀</span>
+            <span>•</span>
+            <span>읽는 시간: 약 4분</span>
+          </div>
+        </div>
+
+        <!-- Top Ad Slot (H1 직하단) -->
+        <div class="manual-ad-box my-6 text-center" style="min-height: 60px;">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2228289204702106"
+               data-ad-slot="3824727725"
+               data-ad-format="horizontal"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <!-- Body Sections -->
+        
+        <section id="sec-1" class="scroll-mt-24 space-y-4 mb-8">
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">1. 1/N 정산의 불공평함과 모임 정산 갈등</h2>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">즐겁게 끝난 회식이나 동창 모임 후 정산 총무가 겪는 가장 큰 스트레스는 '공평한 비용 분배'입니다.</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">모든 사람이 똑같이 시작부터 끝까지 머물며 동일하게 술을 마셨다면 단순 총액 ÷ N으로 끝나겠지만, 현실의 모임은 결코 그렇게 흘러가지 않습니다:
+- 1차만 먹고 먼저 집에 간 사람
+- 2차 중간에 지각하여 합류한 사람
+- 술을 한 방울도 마시지 않고 콜라만 마신 비음주자
+- 개인 카드로 1차를 먼저 긁어 결제한 총무</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">이들을 무시하고 단순 1/N로 균등 청구하면 비음주자나 조기 귀가자는 속으로 불만을 품게 되고, 반대로 총무가 일일이 종이에 수식을 써서 계산하자니 10원 단위가 맞지 않아 적자를 보거나 실수를 하게 됩니다.</p>
+        </section>
+        
+        <section id="sec-2" class="scroll-mt-24 space-y-4 mb-8">
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">2. 차수별 가중치 및 핸디캡 분할 행렬 수학 공식</h2>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">본 스마트 더치페이 엔진은 연립방정식 행렬 알고리즘을 기반으로 완벽한 수학적 무결성을 보장합니다.</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">각 차수(Round $k$)별 총비용 $C_k$에 대해, 각 참석자 $i$의 참여 여부 $P_{i,k} \in \{0, 1\}$와 음주 여부 가중치 $W_{i,k}$를 적용하여 개인별 실질 부담금 $S_i$를 도출합니다:
+$$S_i = \sum_{k=1}^{n} \left( C_k 	imes rac{W_{i,k} 	imes P_{i,k}}{\sum_{j} (W_{j,k} 	imes P_{j,k})} ight)$$</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">술을 마시지 않은 비음주자에게는 주류 비용에 해당하는 기본 20~30% 할인 핸디캡 가중치가 자동으로 적용되며, 늦게 온 지각자는 참여한 차수의 비용만 정밀하게 배분됩니다.</p>
+        </section>
+        
+            <div class="manual-ad-box my-8 text-center">
+              <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-2228289204702106"
+                   data-ad-slot="3416334507"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+            
+        <section id="sec-3" class="scroll-mt-24 space-y-4 mb-8">
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">3. 부동소수점 오차 없는 100원 단위 절사·올림 처리</h2>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">자바스크립트의 IEEE 754 부동소수점 연산 특성상 1/N 나눗셈을 수행하면 `33,333.3333...`원과 같은 무한소수가 발생하여 전체 합산 시 1~10원의 결손이나 초과가 발생하곤 합니다.</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">본 계산기는 모든 연산을 정수 단위(Integer cents)로 처리한 후, 사용자가 선택한 옵션(100원 단위 내림/올림, 총무 부담 여부)에 따라 오차를 100% 보정합니다.</p><p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">절사된 자투리 금액이 총무에게 일방적인 손해로 전가되지 않도록 투명한 영수증 내역을 제공함으로써 누구도 억울하지 않은 깔끔한 정산 문화를 만듭니다.</p>
+        </section>
+        
+        <section id="sec-4" class="scroll-mt-24 space-y-4 mb-8">
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">4. 센스 있는 총무의 정산 카톡 메시지 작성법</h2>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-base mb-4">돈을 청구할 때 어색함을 없애주는 카카오톡 공유 팁입니다:
+1. **투명한 영수증 명세 공개**: 1차, 2차 총비용과 참석자별 차수를 표기합니다.
+2. **원클릭 송금 딥링크 포함**: 카카오페이, 토스 링크 또는 계좌번호를 본문에 깔끔하게 첨부합니다.
+3. **위트 있는 마무리 문구**: '즐거운 모임이었습니다! 빠른 입금은 다음 모임의 평화를 보장합니다' 카피로 유쾌하게 마감합니다.</p>
+        </section>
+        
+
+        <!-- Comparison Table Section -->
+        
+    <section id="sec-comparison" class="scroll-mt-24 space-y-4 mb-10">
+      <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">참석 유형별 정산 분할 시뮬레이션 비교 (총 3차 모임 기준)</h2>
+      <div class="overflow-x-auto my-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <table class="w-full text-left border-collapse bg-white dark:bg-slate-900">
+          <thead><tr><th class="py-3 px-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold border border-slate-200 dark:border-slate-700 text-xs md:text-sm">참석자 유형</th><th class="py-3 px-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold border border-slate-200 dark:border-slate-700 text-xs md:text-sm">1차 (고깃집 20만)</th><th class="py-3 px-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold border border-slate-200 dark:border-slate-700 text-xs md:text-sm">2차 (호프 10만)</th><th class="py-3 px-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold border border-slate-200 dark:border-slate-700 text-xs md:text-sm">3차 (노래방 6만)</th><th class="py-3 px-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold border border-slate-200 dark:border-slate-700 text-xs md:text-sm">최종 부담액</th></tr></thead>
+          <tbody><tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition"><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">풀코스 음주자 A</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">40,000원</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">25,000원</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">15,000원</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">80,000원 (정액 부담)</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition"><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">비음주자 B (1~3차 참여)</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">40,000원</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">15,000원 (음주 할인)</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">15,000원</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">70,000원 (1만 원 할인)</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition"><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">1차만 참여 후 귀가 C</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">40,000원</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">0원 (불참)</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">0원 (불참)</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">40,000원 (깔끔 분리)</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition"><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">2차부터 합류한 지각자 D</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">0원 (불참)</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">25,000원</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">15,000원</td><td class="py-3 px-4 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed">40,000원 (정밀 반영)</td></tr>
+</tbody>
+        </table>
+      </div>
+    </section>
+    
+
+        <!-- FAQ Section -->
+        
+    <section id="sec-faq" class="scroll-mt-24 space-y-4 mb-10">
+      <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">자주 묻는 질문 (E-E-A-T FAQ 3선)</h2>
+      <div class="space-y-4 my-4">
+        
+        <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5 bg-white dark:bg-slate-800 shadow-sm space-y-2">
+          <h3 class="font-bold text-base md:text-lg text-slate-900 dark:text-white flex items-center gap-2">
+            <span class="text-indigo-600 font-extrabold">Q.</span> 계좌번호를 복사 결과에 자동으로 넣을 수 있나요?
+          </h3>
+          <p class="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed pl-6">
+            네, 상단 설정창에 본인의 입금 은행과 계좌번호를 입력해 두면 결과 복사 시 카카오톡 공유 텍스트 하단에 계좌번호가 자동으로 깔끔하게 병합됩니다.
+          </p>
+        </div>
+        
+        <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5 bg-white dark:bg-slate-800 shadow-sm space-y-2">
+          <h3 class="font-bold text-base md:text-lg text-slate-900 dark:text-white flex items-center gap-2">
+            <span class="text-indigo-600 font-extrabold">Q.</span> 인원수가 10명이 넘어가도 계산되나요?
+          </h3>
+          <p class="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed pl-6">
+            최대 30명 이상의 대규모 동아리·회사 회식까지 인원 추가 및 차수 추가를 무제한으로 지원합니다.
+          </p>
+        </div>
+        
+        <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5 bg-white dark:bg-slate-800 shadow-sm space-y-2">
+          <h3 class="font-bold text-base md:text-lg text-slate-900 dark:text-white flex items-center gap-2">
+            <span class="text-indigo-600 font-extrabold">Q.</span> 입력했던 정산 내역이 브라우저를 닫으면 지워지나요?
+          </h3>
+          <p class="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed pl-6">
+            안전한 로컬스토리지 임시 보관 기능을 탑재하여 새로고침하거나 실수로 창을 닫아도 직전 작업 내역이 안전하게 복구됩니다.
+          </p>
+        </div>
+        
+      </div>
+    </section>
+    
+
+        <!-- Bottom Ad Slot (도구 복귀 버튼 직전) -->
+        <div class="manual-ad-box my-8 text-center">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2228289204702106"
+               data-ad-slot="3416334507"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <!-- Large CTA Card to Return to Main Tool -->
+        <div class="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 text-center bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/40 dark:to-blue-950/40 rounded-2xl p-6 sm:p-8 border border-indigo-100 dark:border-indigo-900/50">
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">지금 바로 직접 확인해보세요!</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto leading-relaxed">
+            복잡한 설명보다 단 한 번의 직접 실행이 가장 정확합니다. 무서버 100% 로컬 연산으로 안전하게 결과를 확인하세요.
+          </p>
+          <a href="../index.html" class="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-8 py-3.5 rounded-xl transition shadow-md hover:shadow-lg text-base transform hover:-translate-y-0.5">
+            <span>👉</span> <span>스마트 더치페이 계산기 바로 사용하기</span>
+          </a>
+        </div>
+
+      </article>
+
+      <!-- Right Column: Sticky Table of Contents & Summary (4 cols) -->
+      <aside class="lg:col-span-4 sticky top-20 space-y-6">
+        
+        <!-- Table of Contents Card -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+          <h3 class="font-bold text-slate-900 dark:text-white text-base mb-4 flex items-center gap-2">
+            <span class="text-indigo-600">📑</span> 목차 바로가기
+          </h3>
+          <nav>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#sec-1" class="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition block py-1 border-l-2 border-transparent hover:border-indigo-600 pl-3">1. 1/N 정산의 불공평함과 모임 정산 갈등</a></li>
+<li><a href="#sec-2" class="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition block py-1 border-l-2 border-transparent hover:border-indigo-600 pl-3">2. 차수별 가중치 및 핸디캡 분할 행렬 수학 공식</a></li>
+<li><a href="#sec-3" class="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition block py-1 border-l-2 border-transparent hover:border-indigo-600 pl-3">3. 부동소수점 오차 없는 100원 단위 절사·올림 처리</a></li>
+<li><a href="#sec-4" class="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition block py-1 border-l-2 border-transparent hover:border-indigo-600 pl-3">4. 센스 있는 총무의 정산 카톡 메시지 작성법</a></li>
+<li><a href="#sec-comparison" class="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition block py-1 border-l-2 border-transparent hover:border-indigo-600 pl-3">핵심 비교 분석표</a></li>
+<li><a href="#sec-faq" class="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition block py-1 border-l-2 border-transparent hover:border-indigo-600 pl-3">자주 묻는 질문 (FAQ)</a></li>
+
+            </ul>
+          </nav>
+        </div>
+
+        <!-- Quick Summary Box -->
+        <div class="bg-indigo-50/70 dark:bg-indigo-950/40 rounded-2xl p-6 border border-indigo-100 dark:border-indigo-900/50 space-y-3">
+          <h4 class="font-bold text-indigo-900 dark:text-indigo-200 text-sm flex items-center gap-1.5">
+            <span>💡</span> 핵심 요약 (Key Takeaway)
+          </h4>
+          <p class="text-xs text-indigo-800 dark:text-indigo-300 leading-relaxed">
+            본 가이드북의 모든 분석 데이터는 2026년 최신 공식 기준을 바탕으로 작성되었습니다. 본 도구와 가이드를 함께 활용하시면 최적의 의사결정에 도달할 수 있습니다.
+          </p>
+          <div class="pt-2">
+            <a href="../index.html" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
+              <span>도구로 이동하기</span> <span>→</span>
+            </a>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Floating Action Widget (메인 도구 복귀 플로팅 위젯) -->
+  <a href="../index.html" 
+     class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-3 rounded-full shadow-xl hover:shadow-2xl transition transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+     title="스마트 더치페이 계산기 메인으로 돌아가기">
+    <span class="text-lg">🧮</span>
+    <span class="text-sm hidden sm:inline">스마트 더치페이 계산기 바로가기</span>
+    <span class="text-sm sm:hidden">도구 복귀</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 text-center text-xs text-slate-500 dark:text-slate-400 mt-12">
+    <div class="max-w-6xl mx-auto px-4 space-y-3">
+      <div class="flex justify-center gap-4 text-xs font-medium">
+        <a href="../index.html" class="hover:underline">메인 도구</a>
+        <span>•</span>
+        <a href="../privacy.html" class="hover:underline">개인정보처리방침</a>
+        <span>•</span>
+        <a href="../terms.html" class="hover:underline">이용약관</a>
+      </div>
+      <p>© 2026 enjoy-onepage.com. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
