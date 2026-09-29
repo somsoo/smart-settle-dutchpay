@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>스마트 더치페이 계산기: N차 모임 &amp; 비음주자 핸디캡 정산</title>
+  <link>https://smart-settle-dutchpay.enjoy-onepage.com/</link>
+  <description>1차, 2차, 3차 차수별 참석자, 술 안 마신 사람, 지각자 핸디캡을 1원 단위 오차 없이 공평하게 분할 정산하고 카톡 공유 명세를 자동 생성합니다.</description>
+  <language>ko-kr</language>
+  <atom:link href="https://smart-settle-dutchpay.enjoy-onepage.com/rss.xml" rel="self" type="application/rss+xml" />
+  <lastBuildDate>Tue, 29 Sep 2026 06:00:52 +0000</lastBuildDate>
+  <item>
+    <title>이용약관 - 스마트 더치페이 계산기: N차 모임 &amp; 비음주자 핸디캡 정산</title>
+    <link>https://smart-settle-dutchpay.enjoy-onepage.com/terms.html</link>
+    <guid isPermaLink="true">https://smart-settle-dutchpay.enjoy-onepage.com/terms.html</guid>
+    <description>스마트 더치페이 계산기: N차 모임 &amp; 비음주자 핸디캡 정산의 서비스 이용약관입니다. 면책 조항 및 서비스 이용 기준을 안내합니다.</description>
+    <pubDate>Mon, 21 Sep 2026 23:09:29 +0900</pubDate>
+  </item>
+  <item>
+    <title>개인정보처리방침 - 스마트 더치페이 계산기: N차 모임 &amp; 비음주자 핸디캡 정산</title>
+    <link>https://smart-settle-dutchpay.enjoy-onepage.com/privacy.html</link>
+    <guid isPermaLink="true">https://smart-settle-dutchpay.enjoy-onepage.com/privacy.html</guid>
+    <description>스마트 더치페이 계산기: N차 모임 &amp; 비음주자 핸디캡 정산의 개인정보처리방침입니다. 본 도구는 사용자 데이터를 서버로 전송하지 않습니다.</description>
+    <pubDate>Mon, 21 Sep 2026 23:09:29 +0900</pubDate>
+  </item>
+  <item>
+    <title>N차 복잡한 모임 정산과 지각·음주 핸디캡 더치페이 공학 가이드</title>
+    <link>https://smart-settle-dutchpay.enjoy-onepage.com/guides/guide.html</link>
+    <guid isPermaLink="true">https://smart-settle-dutchpay.enjoy-onepage.com/guides/guide.html</guid>
+    <description>1차 고깃집, 2차 호프, 3차 노래방 등 N차 모임에서 참석자별 차수 참여, 술 안 마신 사람, 늦게 온 지각자 핸디캡을 1원 단위 오차 없이 공평 정산하는 알고리즘을 분석합니다.</description>
+    <pubDate>Mon, 21 Sep 2026 22:50:18 +0900</pubDate>
+  </item>
+</channel>
+</rss>
