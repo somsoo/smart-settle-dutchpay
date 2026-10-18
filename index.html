@@ -397,9 +397,9 @@
     function runCalculation() {
       const r1 = cleanNum(document.getElementById('round1-amount')?.value);
       const r2 = cleanNum(document.getElementById('round2-amount')?.value);
-      const totalMembers = parseInt(document.getElementById('member-count')?.value, 10);
-      const nonDrinkers = parseInt(document.getElementById('non-drinker-count')?.value, 10);
-      const lateMembers = parseInt(document.getElementById('late-count')?.value, 10);
+      const totalMembers = Math.max(1, parseInt(document.getElementById('member-count')?.value, 10) || 1);
+      const nonDrinkers = Math.max(0, parseInt(document.getElementById('non-drinker-count')?.value, 10) || 0);
+      const lateMembers = Math.max(0, parseInt(document.getElementById('late-count')?.value, 10) || 0);
 
       // Round 2 is equal 1/N
       const r2PerPerson = Math.round(r2 / totalMembers);
